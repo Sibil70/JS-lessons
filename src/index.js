@@ -1,5 +1,5 @@
 /* ДЗ 1 - Функции */
- просто пара изменений
+
 /*
  Задание 1:
 
@@ -12,8 +12,9 @@
 
  Другими словами: функция должна возвращать в неизменном виде то, что поступает ей на вход
  */
-function returnFirstArgument() {
-}
+function returnFirstArgument(a) {
+  return a
+};
 
 /*
  Задание 2:
@@ -30,6 +31,10 @@ function returnFirstArgument() {
    sumWithDefaults(10) вернет 110
  */
 function sumWithDefaults(a, b) {
+  if (b == undefined) {
+    b = 100;
+  }
+  return a + b;
 }
 
 /*
@@ -41,6 +46,10 @@ function sumWithDefaults(a, b) {
    returnFnResult(() => 'привет') вернет 'привет'
  */
 function returnFnResult(fn) {
+  // let fn = function(a){
+  //   return a;
+  // }
+  // return fn;
 }
 
 /*
@@ -57,6 +66,10 @@ function returnFnResult(fn) {
    console.log(f()); // выведет 13
  */
 function returnCounter(number) {
+
+  return function f() {
+   this.number++
+  };
 }
 
 /*
@@ -69,6 +82,7 @@ function returnCounter(number) {
    returnArgumentsArray(1, 2, 3) вернет [1, 2, 3]
  */
 function returnArgumentsArray() {
+  return Array.from(arguments);
 }
 
 /*
@@ -86,14 +100,13 @@ function returnArgumentsArray() {
 
    console.log(newSum()) выведет 6
  */
-function bindFunction(fn) {
-}
+function bindFunction(fn) {}
 
 export {
-    returnFirstArgument,
-    sumWithDefaults,
-    returnArgumentsArray,
-    returnFnResult,
-    returnCounter,
-    bindFunction
+  returnFirstArgument,
+  sumWithDefaults,
+  returnArgumentsArray,
+  returnFnResult,
+  returnCounter,
+  bindFunction
 }
