@@ -7,7 +7,7 @@
  Посмотрите как работает forEach и повторите это поведение для массива, который будет передан в параметре array
  */
 function forEach(array, fn) {
-  for (let i=0; i<array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     fn(array[i], i, array);
   }
 }
@@ -20,7 +20,7 @@ function forEach(array, fn) {
  */
 function map(array, fn) {
   var results = [];
-  for (let i=0; i<array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     results.push(fn(array[i], i, array));
   }
   return results;
@@ -34,6 +34,11 @@ function map(array, fn) {
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
 function reduce(array, fn, initial) {
+  var prev;
+  for (let i = 0; i < array.length; i = i + 1) {
+    prev = fn(prev, array[i], i, array);
+  };
+  return prev;
 }
 
 /*
@@ -45,6 +50,22 @@ function reduce(array, fn, initial) {
    upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
  */
 function upperProps(obj) {
+  var array = [];
+
+  //////// первый вариант
+
+  Object.keys(obj).forEach(function (key) {
+    let keys = key.toUpperCase();
+    array.push(keys);
+  }, obj);
+
+  //////// второй вариант
+
+  /* for (var key in obj) {
+     let big = key.toUpperCase();
+     array.push(big);    
+   }*/
+  return array;
 }
 
 /*
@@ -53,8 +74,7 @@ function upperProps(obj) {
  Напишите аналог встроенного метода slice для работы с массивами
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
-function slice(array, from, to) {
-}
+function slice(array, from, to) {}
 
 /*
  Задание 6 *:
@@ -62,14 +82,13 @@ function slice(array, from, to) {
  Функция принимает объект и должна вернуть Proxy для этого объекта
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
-function createProxy(obj) {
-}
+function createProxy(obj) {}
 
 export {
-    forEach,
-    map,
-    reduce,
-    upperProps,
-    slice,
-    createProxy
+  forEach,
+  map,
+  reduce,
+  upperProps,
+  slice,
+  createProxy
 };
