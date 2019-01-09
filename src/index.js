@@ -35,8 +35,8 @@ function map(array, fn) {
  */
 function reduce(array, fn, initial) {
   var prev = initial;
-  for (let i = 0; i < array.length; i = i + 1) {
-    fn(prev, array[i], i, array);
+  for (let i = 0; i < array.length; i++) {
+   fn(initial, array[i], i, array);
   };
   return prev;
 }
@@ -112,7 +112,10 @@ function slice(array, from = 0, to = array.length) {
  Функция принимает объект и должна вернуть Proxy для этого объекта
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
-function createProxy(obj) {}
+function createProxy(obj) {
+  var obj = {};
+  let proxy = new Proxy(obj, handler)
+}
 
 export {
   forEach,
