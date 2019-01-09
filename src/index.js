@@ -34,9 +34,9 @@ function map(array, fn) {
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
 function reduce(array, fn, initial) {
-  var prev;
+  var prev = initial;
   for (let i = 0; i < array.length; i = i + 1) {
-    prev = fn(prev, array[i], i, array);
+    fn(prev, array[i], i, array);
   };
   return prev;
 }
@@ -74,7 +74,37 @@ function upperProps(obj) {
  Напишите аналог встроенного метода slice для работы с массивами
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
-function slice(array, from, to) {}
+function slice(array, from = 0, to = array.length) {
+  var newArr = [];
+  if (to > array.length) {
+    to = array.length
+  };
+  if (from >= 0 && to >= 0) {
+    for (let i = from; i < to; i++) {
+      newArr.push(array[i]);
+    }
+  };
+
+  if (from >= 0 && to < 0) {
+    for (let i = from; i < array.length - Math.abs(to); i++) {
+      newArr.push(array[i]);
+    }
+  };
+
+  if (from < 0 && to > 0) {
+    for (let i = 0; i < to; i++) {
+      newArr.push(array[i]);
+    }
+  };
+
+  if (from < 0 && to < 0) {
+    for (let i = 0; i < array.length - Math.abs(to); i++) {
+      newArr.push(array[i]);
+    }
+  };
+
+  return newArr;
+}
 
 /*
  Задание 6 *:
