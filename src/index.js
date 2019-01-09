@@ -34,9 +34,19 @@ function map(array, fn) {
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
 function reduce(array, fn, initial) {
-  var prev = initial;
-  for (let i = 0; i < array.length; i++) {
-   fn(initial, array[i], i, array);
+  let prev, i;
+
+  if (initial) {
+    prev = initial;
+    i = 0;
+
+  } else {
+    prev = array[0];
+    i = 1;
+  };
+
+  for (i; i < array.length; i++) {
+    prev = fn(prev, array[i], i, array);
   };
   return prev;
 }
@@ -79,6 +89,7 @@ function slice(array, from = 0, to = array.length) {
   if (to > array.length) {
     to = array.length
   };
+  
   if (from >= 0 && to >= 0) {
     for (let i = from; i < to; i++) {
       newArr.push(array[i]);
