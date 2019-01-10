@@ -85,35 +85,34 @@ function upperProps(obj) {
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
 function slice(array, from = 0, to = array.length) {
-  var newArr = [];
+  var newArr = [], i, till;
   if (to > array.length) {
     to = array.length
   };
   
   if (from >= 0 && to >= 0) {
-    for (let i = from; i < to; i++) {
-      newArr.push(array[i]);
-    }
+    i = from;
+    till = to;
   };
 
   if (from >= 0 && to < 0) {
-    for (let i = from; i < array.length - Math.abs(to); i++) {
-      newArr.push(array[i]);
-    }
+    i = from;
+    till = array.length - Math.abs(to);
   };
 
   if (from < 0 && to > 0) {
-    for (let i = 0; i < to; i++) {
-      newArr.push(array[i]);
-    }
+    i = 0;
+    till = to;
   };
 
   if (from < 0 && to < 0) {
-    for (let i = 0; i < array.length - Math.abs(to); i++) {
-      newArr.push(array[i]);
-    }
+    i = 0;
+    till =  array.length - Math.abs(to);
   };
 
+  for (i; i < till; i++) {
+    newArr.push(array[i]);
+  }
   return newArr;
 }
 
@@ -124,8 +123,13 @@ function slice(array, from = 0, to = array.length) {
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
 function createProxy(obj) {
-  var obj = {};
-  let proxy = new Proxy(obj, handler)
+  return new Proxy(obj, {
+    set(target, prop, value) {
+      target[prop] = value*value;
+
+      return true;
+  }
+});  
 }
 
 export {
