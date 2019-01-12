@@ -1,3 +1,7 @@
+import {
+  isArray
+} from "util";
+
 /* ДЗ 3 - работа с исключениями и отладчиком */
 
 /*
@@ -17,6 +21,26 @@
    isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false
  */
 function isAllTrue(array, fn) {
+  var i, length = array.length,
+    result;
+  if (!Array.isArray(array) || length == 0) {
+    throw new Error("empty array");
+  } else if (typeof (fn) !== "function") {
+    throw new Error("fn is not a function");
+  }
+
+  for (i = 0; i < length; i++) {
+    result = fn(array[i]);
+  }
+  try {
+    if (result) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    console.log(e.message);
+  }
 }
 
 /*
@@ -35,8 +59,7 @@ function isAllTrue(array, fn) {
    isSomeTrue([1, 2, 30, 4, 5], n => n > 20) // вернет true
    isSomeTrue([1, 2, 3, 4, 5], n => n > 20) // вернет false
  */
-function isSomeTrue(array, fn) {
-}
+function isSomeTrue(array, fn) {}
 
 /*
  Задание 3:
@@ -49,8 +72,7 @@ function isSomeTrue(array, fn) {
  3.3: Необходимо выбрасывать исключение в случаях:
    - fn не является функцией (с текстом "fn is not a function")
  */
-function returnBadArguments(fn) {
-}
+function returnBadArguments(fn) {}
 
 /*
  Задание 4:
@@ -69,14 +91,13 @@ function returnBadArguments(fn) {
    - number не является числом (с текстом "number is not a number")
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator() {
-}
+function calculator() {}
 
 /* При решении задач, пострайтесь использовать отладчик */
 
 export {
-    isAllTrue,
-    isSomeTrue,
-    returnBadArguments,
-    calculator
+  isAllTrue,
+  isSomeTrue,
+  returnBadArguments,
+  calculator
 };
