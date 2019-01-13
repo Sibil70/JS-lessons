@@ -84,10 +84,28 @@ function isSomeTrue(array, fn) {
    - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn, ...args) {
-  let i, arr;
-  for (i=0; i<args.length; i++){
-   arr.push(fn(args[i]));
+  let arr = [];
+
+  if (typeof fn !== 'function') {
+    throw new Error('fn is not a function');
   }
+
+  for (var arg of args) {
+    try {
+      fn(arg);
+    } catch (err) {
+      arr.push(arg);
+    }
+  }
+
+  // let i;
+  // for (i = 0; i < args.length; i++) {
+  //   try {
+  //     fn(args[i]);
+  //   } catch (err) {
+  //     arr.push(args[i]);
+  //   }
+  // }
   return arr;
 }
 
@@ -108,7 +126,20 @@ function returnBadArguments(fn, ...args) {
    - number не является числом (с текстом "number is not a number")
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator() {}
+function calculator(number = 0) {
+  if (typeof number !== "number") {
+    throw new Error("number is not a number");
+  }
+
+  var result = {
+    sum: function (a){return a+2},
+    dif: function (a){return a+2},
+    div: function (a){return a+2},
+    mul: function (a){return a+2}
+  };
+
+  return result;
+}
 
 /* При решении задач, пострайтесь использовать отладчик */
 
