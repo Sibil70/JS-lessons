@@ -130,15 +130,51 @@ function calculator(number = 0) {
   if (typeof number !== "number") {
     throw new Error("number is not a number");
   }
+  let sum = function (...args) {
+      var result;
+      var arr = Array.from(arguments);
+      result = arr.reduce(function (previousValue, currentValue) {
+        return previousValue + currentValue;
+      }, number);
+      return result;
+    },
+    dif = function (...args) {
+      var result;
+      var arr = Array.from(arguments);
+      result = arr.reduce(function (previousValue, currentValue) {
+        return previousValue - currentValue;
+      }, number);
+      return result;
+    },
+    div = function (...args) {
+      var result;
+      var arr = Array.from(arguments);
+      for (let i = 0; i<arr.length; i++) {
+        if (arr[i] == 0) {
+          throw new Error("division by 0")
+        }
+      }
+      result = arr.reduce(function (previousValue, currentValue) {
+        return previousValue / currentValue;
+      }, number);
+      return result;
+    },
+    mul = function (...args) {
+      var result;
+      var arr = Array.from(arguments);
+      result = arr.reduce(function (previousValue, currentValue) {
+        return previousValue * currentValue;
+      }, number);
+      return result;
+    };
 
-  var result = {
-    sum: function (a){return a+2},
-    dif: function (a){return a+2},
-    div: function (a){return a+2},
-    mul: function (a){return a+2}
+
+  return {
+    sum,
+    dif,
+    div,
+    mul
   };
-
-  return result;
 }
 
 /* При решении задач, пострайтесь использовать отладчик */
