@@ -97,7 +97,8 @@ function returnBadArguments(fn, ...args) {
       arr.push(arg);
     }
   }
-
+  // второй вариант
+  
   // let i;
   // for (i = 0; i < args.length; i++) {
   //   try {
