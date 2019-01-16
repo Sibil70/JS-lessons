@@ -1,6 +1,4 @@
-import {
-  isArray
-} from "util";
+import { isArray } from 'util';
 
 /* ДЗ 3 - работа с исключениями и отладчиком */
 
@@ -21,21 +19,24 @@ import {
    isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false
  */
 function isAllTrue(array, fn) {
-  var i, length = array.length,
-    result;
-  if (!Array.isArray(array) || length == 0) {
-    throw new Error("empty array");
-  } else if (typeof (fn) !== "function") {
-    throw new Error("fn is not a function");
-  }
+    var i,
+        length = array.length,
+        result;
 
-  for (i = 0; i < length; i++) {
-    result = fn(array[i]);
-  }
-  if (!result) {
-    return false;
-  }
-  return true;
+    if (!Array.isArray(array) || length == 0) {
+        throw new Error('empty array');
+    } else if (typeof fn !== 'function') {
+        throw new Error('fn is not a function');
+    }
+
+    for (i = 0; i < length; i++) {
+        result = fn(array[i]);
+    }
+    if (!result) {
+        return false;
+    }
+
+    return true;
 }
 
 /*
@@ -55,21 +56,22 @@ function isAllTrue(array, fn) {
    isSomeTrue([1, 2, 3, 4, 5], n => n > 20) // вернет false
  */
 function isSomeTrue(array, fn) {
-  var i, length = array.length;
+    var i,
+        length = array.length;
 
-  if (!Array.isArray(array) || length == 0) {
-    throw new Error("empty array");
-  } else if (typeof (fn) !== "function") {
-    throw new Error("fn is not a function");
-  }
-
-  for (i = 0; i < length; i++) {
-    if (fn(array[i])) {
-      return true;
+    if (!Array.isArray(array) || length == 0) {
+        throw new Error('empty array');
+    } else if (typeof fn !== 'function') {
+        throw new Error('fn is not a function');
     }
-  }
 
-  return false;
+    for (i = 0; i < length; i++) {
+        if (fn(array[i])) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /*
@@ -84,30 +86,30 @@ function isSomeTrue(array, fn) {
    - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn, ...args) {
-  let arr = [];
+    let arr = [];
 
-  if (typeof fn !== 'function') {
-    throw new Error('fn is not a function');
-  }
-
-  for (var arg of args) {
-    try {
-      fn(arg);
-    } catch (err) {
-      arr.push(arg);
+    if (typeof fn !== 'function') {
+        throw new Error('fn is not a function');
     }
-  }
-  // второй вариант
-  
-  // let i;
-  // for (i = 0; i < args.length; i++) {
-  //   try {
-  //     fn(args[i]);
-  //   } catch (err) {
-  //     arr.push(args[i]);
-  //   }
-  // }
-  return arr;
+
+    for (var arg of args) {
+        try {
+            fn(arg);
+        } catch (err) {
+            arr.push(arg);
+        }
+    }
+    // второй вариант
+
+    // let i;
+    // for (i = 0; i < args.length; i++) {
+    //   try {
+    //     fn(args[i]);
+    //   } catch (err) {
+    //     arr.push(args[i]);
+    //   }
+    // }
+    return arr;
 }
 
 /*
@@ -128,61 +130,63 @@ function returnBadArguments(fn, ...args) {
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
 function calculator(number = 0) {
-  if (typeof number !== "number") {
-    throw new Error("number is not a number");
-  }
-  let sum = function (...args) {
-      var result;
-      var arr = Array.from(arguments);
-      result = arr.reduce(function (previousValue, currentValue) {
-        return previousValue + currentValue;
-      }, number);
-      return result;
-    },
-    dif = function (...args) {
-      var result;
-      var arr = Array.from(arguments);
-      result = arr.reduce(function (previousValue, currentValue) {
-        return previousValue - currentValue;
-      }, number);
-      return result;
-    },
-    div = function (...args) {
-      var result;
-      var arr = Array.from(arguments);
-      for (let i = 0; i<arr.length; i++) {
-        if (arr[i] == 0) {
-          throw new Error("division by 0")
-        }
-      }
-      result = arr.reduce(function (previousValue, currentValue) {
-        return previousValue / currentValue;
-      }, number);
-      return result;
-    },
-    mul = function (...args) {
-      var result;
-      var arr = Array.from(arguments);
-      result = arr.reduce(function (previousValue, currentValue) {
-        return previousValue * currentValue;
-      }, number);
-      return result;
+    if (typeof number !== 'number') {
+        throw new Error('number is not a number');
+    }
+    let sum = function() {
+            var result;
+            var arr = Array.from(arguments);
+
+            result = arr.reduce(function(previousValue, currentValue) {
+                return previousValue + currentValue;
+            }, number);
+
+            return result;
+        },
+        dif = function() {
+            var result;
+            var arr = Array.from(arguments);
+
+            result = arr.reduce(function(previousValue, currentValue) {
+                return previousValue - currentValue;
+            }, number);
+
+            return result;
+        },
+        div = function() {
+            var result;
+            var arr = Array.from(arguments);
+
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] == 0) {
+                    throw new Error('division by 0');
+                }
+            }
+            result = arr.reduce(function(previousValue, currentValue) {
+                return previousValue / currentValue;
+            }, number);
+
+            return result;
+        },
+        mul = function() {
+            var result;
+            var arr = Array.from(arguments);
+
+            result = arr.reduce(function(previousValue, currentValue) {
+                return previousValue * currentValue;
+            }, number);
+
+            return result;
+        };
+
+    return {
+        sum,
+        dif,
+        div,
+        mul
     };
-
-
-  return {
-    sum,
-    dif,
-    div,
-    mul
-  };
 }
 
 /* При решении задач, пострайтесь использовать отладчик */
 
-export {
-  isAllTrue,
-  isSomeTrue,
-  returnBadArguments,
-  calculator
-};
+export { isAllTrue, isSomeTrue, returnBadArguments, calculator };
