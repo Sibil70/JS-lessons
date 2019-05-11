@@ -37,6 +37,36 @@ const homeworkContainer = document.querySelector('#homework-container');
  https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json
  */
 function loadTowns() {
+    return new Promise ( (resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+
+        xhr.overrideMimeType('application/json');
+        xhr.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json', true);
+
+        xhr.onload = function () {
+            if (xhr.status == 200) {
+                let arrayCities = JSON.parse(this.responseText);
+
+                arrayCities.sort(function (a, b) {
+                    if (a.name > b.name) {
+                        return 1;
+                    }
+                    if (a.name < b.name) {
+                        return -1;
+                    }
+                    // a должно быть равным b
+
+                    return 0;
+                })
+
+                resolve(arrayCities);
+            } else {
+                reject(new Error(xhr.statusText));
+            }
+        }
+
+        xhr.send();
+    })
 }
 
 /*
@@ -51,6 +81,7 @@ function loadTowns() {
    isMatching('Moscow', 'Moscov') // false
  */
 function isMatching(full, chunk) {
+    return full.toLowerCase().indexOf(chunk.toLowerCase()) >= 0;
 }
 
 /* Блок с надписью "Загрузка" */
@@ -62,8 +93,38 @@ const filterInput = homeworkContainer.querySelector('#filter-input');
 /* Блок с результатами поиска */
 const filterResult = homeworkContainer.querySelector('#filter-result');
 
+const towns = loadTowns();
+let sortedTowns = [];
+
+towns.then((cities) => {
+    sortedTowns = cities;
+    loadingBlock.style.display = 'none';
+    filterBlock.style.display = 'block';
+})
+
+let cityInResult;
+
 filterInput.addEventListener('keyup', function() {
-    // это обработчик нажатия кливиш в текстовом поле
+    filterResult.innerHTML = null;
+
+    if (!filterInput.value) {
+        return
+    }
+
+    cityInResult = sortedTowns.filter(city => {
+        return isMatching(city.name, filterInput.value);
+    })
+
+    let fragment = document.createDocumentFragment();
+
+    cityInResult.forEach(city => {
+        let cityListItem = document.createElement('li');
+
+        cityListItem.textContent = city.name;
+        fragment.appendChild(cityListItem);
+    });
+
+    filterResult.appendChild(fragment);
 });
 
 export {
